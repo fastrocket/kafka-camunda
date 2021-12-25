@@ -23,14 +23,14 @@ public class GenericSender {
 
     public void send(String topic, String payload) {
         String key = UUID.randomUUID().toString();
-        LOGGER.info("sending payload='{}' to topic='{}' with key={}", payload, topic, key);
+        LOGGER.info("SEND: sending payload='{}' to topic='{}' with key={}", payload, topic, key);
         kafkaTemplate.send(topic, key, payload);
 
     }
 
     public void send(String payload) {
         String key = UUID.randomUUID().toString();
-        LOGGER.info("sending payload='{}' to topic='{}' with key={}", payload, topic, key);
+        LOGGER.info("SEND: sending payload='{}' to topic='{}' with key={}", payload, topic, key);
         kafkaTemplate.send(this.topic, key, payload);
     }
 }
