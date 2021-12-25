@@ -9,6 +9,7 @@ server:
 
 spring:
   kafka:
+    bootstrap-servers: 23.23.200.63:9092
     consumer:
       bootstrap-servers: 23.23.200.63:9092
       group-id: group_id
@@ -21,6 +22,7 @@ spring:
       bootstrap-servers: 23.23.200.63:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer #org.apache.kafka.common.serialization.StringSerializer
+
 
 kafka:
   topic: users
