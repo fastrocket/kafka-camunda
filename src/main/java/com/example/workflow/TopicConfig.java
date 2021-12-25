@@ -8,6 +8,7 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class TopicConfig {
     public static final String USER_TOPIC = "users";
+
     @Bean
     public NewTopic businessProcessEngineError() {
         return createNewTopic(USER_TOPIC, 1);
@@ -17,7 +18,7 @@ public class TopicConfig {
         return TopicBuilder
                 .name(name)
                 .partitions(partitions)
-                .replicas(2)
+                .replicas(1)
                 .build();
     }
 
