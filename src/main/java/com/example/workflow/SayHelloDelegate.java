@@ -12,16 +12,16 @@ public class SayHelloDelegate implements JavaDelegate {
     private GenericSender sender;
 
     @Autowired
-    public SayHelloDelegate(GenericSender sender){
+    public SayHelloDelegate(GenericSender sender) {
         this.sender = sender;
     }
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         Random rand = new Random();
-
+        Integer rint = rand.nextInt();
         String helloText = "Now is the time!!!";
-        String text = "SayHelloDelegate setting variable hello: " + helloText;
+        String text = "SayHelloDelegate (random " + rint + ") setting variable hello: " + helloText;
         delegateExecution.setVariable("hello", text);
         System.out.println(text);
         System.out.println("SayHelloDelegate sending to Kafka text: " + text);
@@ -29,7 +29,7 @@ public class SayHelloDelegate implements JavaDelegate {
 
         // Randomly pick a path
         boolean doIt = rand.nextBoolean();
-        System.out.println("SayHelloDelegate setting doIt=" + doIt);
+        System.out.println("SayHelloDelegate setting doIt= and random" + doIt);
         delegateExecution.setVariable("doIt", doIt);
     }
 }
