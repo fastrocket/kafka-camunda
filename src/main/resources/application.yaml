@@ -10,7 +10,7 @@ server:
 spring:
   kafka:
     consumer:
-      bootstrap-servers: 10.0.0.8:9092
+      bootstrap-servers: localhost:9092
       group-id: group_id
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -18,7 +18,7 @@ spring:
       properties:
         spring.json.trusted.packages: "*"
     producer:
-      bootstrap-servers: 10.0.0.8:9092
+      bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer #org.apache.kafka.common.serialization.StringSerializer
 

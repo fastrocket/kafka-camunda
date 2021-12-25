@@ -1,16 +1,14 @@
 package com.example.workflow;
 
-//package com.howtodoinjava.kafka.demo.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-//import com.howtodoinjava.kafka.demo.model.User;
-//import com.howtodoinjava.kafka.demo.service.KafKaProducerService;
-
+// LINH NOTE: This does not work. It's either Camunda
+// or REST. People will use two Docker containers
+// to have both.
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -23,6 +21,7 @@ public class UserController {
 
     @PostMapping(value = "/publish")
     public void publish(@RequestParam("message") String message) {
+
         this.userProducerService.sendMsg(message);
     }
 

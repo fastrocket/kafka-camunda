@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  zookeeper:
+    #container_name: zookeeper
+    image: 'docker.io/bitnami/zookeeper:3-debian-10'
+    ports:
+      - '2181:2181'
+    volumes:
+      - 'zookeeper_data:/bitnami'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    #container_name: kafka
+    image: 'docker.io/bitnami/kafka:2-debian-10'
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    volumes:
+      - 'kafka_data:/bitnami'
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+      # The below did not work. It probably needs kafka defined in /etc/hosts or DNS
+      #- KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://192.168.1.184:9092,EXTERNAL://localhost:9093
+      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+      # Below was not needed
+      #- KAFKA_ADVERTISED_HOST_NAME=kafka
+    depends_on:
+      - zookeeper
+  mysql:
+    image: mysql:5.7.12 #5.6.10 #.10
+    command: --sql_mode="STRICT_TRANS_TABLES" --general-log=1 --general-log-file=/var/log/mysql/general-log.log
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local

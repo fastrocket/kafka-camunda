@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.8.1">
-  <bpmn:process id="process" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.1">
+  <bpmn:process id="linh_process" name="Simple Process by Linh" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start Event">
       <bpmn:outgoing>SequenceFlow_1fp17al</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent_1" targetRef="say-hello" />
     <bpmn:endEvent id="EndEvent_0x6ir2l">
       <bpmn:incoming>Flow_1ucq49i</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_16gzt2m" sourceRef="say-hello" targetRef="Gateway_0s4c5yu" />
+    <bpmn:sequenceFlow id="SequenceFlow_16gzt2m" sourceRef="say-hello" targetRef="UserGo" />
     <bpmn:serviceTask id="say-hello" name="Say hello demo" camunda:class="com.example.workflow.SayHelloDelegate">
       <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16gzt2m</bpmn:outgoing>
@@ -18,69 +18,89 @@
       <bpmn:incoming>Flow_1oxpgh4</bpmn:incoming>
       <bpmn:outgoing>Flow_1ucq49i</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="Gateway_0s4c5yu" name="decide">
-      <bpmn:incoming>SequenceFlow_16gzt2m</bpmn:incoming>
+    <bpmn:exclusiveGateway id="Gateway_decide" name="decide">
+      <bpmn:incoming>Flow_119o821</bpmn:incoming>
       <bpmn:outgoing>Flow_1oxpgh4</bpmn:outgoing>
       <bpmn:outgoing>Flow_0t7jdda</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1oxpgh4" name="Yes" sourceRef="Gateway_0s4c5yu" targetRef="MakeItSo">
+    <bpmn:sequenceFlow id="Flow_1oxpgh4" name="Yes" sourceRef="Gateway_decide" targetRef="MakeItSo">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{doIt}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0t7jdda" name="No" sourceRef="Gateway_0s4c5yu" targetRef="SkipIt">
+    <bpmn:sequenceFlow id="Flow_0t7jdda" name="No" sourceRef="Gateway_decide" targetRef="SkipIt">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not doIt}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="SkipIt" name="Skip It" camunda:delegateExpression="${SkipItDelegate}">
       <bpmn:incoming>Flow_0t7jdda</bpmn:incoming>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_119o821" sourceRef="UserGo" targetRef="Gateway_decide" />
+    <bpmn:userTask id="UserGo" name="User Go No Go" camunda:formRef="" camunda:formRefBinding="latest">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="FormField_GoOrNo" label="Go or No" type="boolean" defaultValue="false" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_16gzt2m</bpmn:incoming>
+      <bpmn:outgoing>Flow_119o821</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="linh_process">
+      <bpmndi:BPMNEdge id="Flow_0t7jdda_di" bpmnElement="Flow_0t7jdda">
+        <di:waypoint x="570" y="142" />
+        <di:waypoint x="570" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="578" y="157" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1oxpgh4_di" bpmnElement="Flow_1oxpgh4">
+        <di:waypoint x="595" y="117" />
+        <di:waypoint x="680" y="117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="630" y="99" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ucq49i_di" bpmnElement="Flow_1ucq49i">
-        <di:waypoint x="700" y="130" />
+        <di:waypoint x="780" y="130" />
         <di:waypoint x="832" y="130" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_16gzt2m_di" bpmnElement="SequenceFlow_16gzt2m">
-        <di:waypoint x="390" y="117" />
-        <di:waypoint x="465" y="117" />
+        <di:waypoint x="360" y="117" />
+        <di:waypoint x="420" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1fp17al_di" bpmnElement="SequenceFlow_1fp17al">
         <di:waypoint x="215" y="117" />
-        <di:waypoint x="290" y="117" />
+        <di:waypoint x="260" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1oxpgh4_di" bpmnElement="Flow_1oxpgh4">
-        <di:waypoint x="515" y="117" />
-        <di:waypoint x="600" y="117" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="549" y="99" width="18" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNEdge id="Flow_119o821_di" bpmnElement="Flow_119o821">
+        <di:waypoint x="520" y="117" />
+        <di:waypoint x="545" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0t7jdda_di" bpmnElement="Flow_0t7jdda">
-        <di:waypoint x="490" y="142" />
-        <di:waypoint x="490" y="220" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="498" y="178" width="15" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1" bioc:stroke="#8e24aa" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#8e24aa">
         <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="170" y="142" width="55" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0abz8tp_di" bpmnElement="say-hello">
-        <dc:Bounds x="290" y="77" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEvent_0x6ir2l">
+      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEvent_0x6ir2l" bioc:stroke="#8e24aa" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#8e24aa">
         <dc:Bounds x="832" y="112" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0s4c5yu_di" bpmnElement="Gateway_0s4c5yu" isMarkerVisible="true">
-        <dc:Bounds x="465" y="92" width="50" height="50" />
+      <bpmndi:BPMNShape id="Activity_1sizis0_di" bpmnElement="MakeItSo" bioc:stroke="#43a047" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#43a047">
+        <dc:Bounds x="680" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0s4c5yu_di" bpmnElement="Gateway_decide" isMarkerVisible="true" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#fb8c00">
+        <dc:Bounds x="545" y="92" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="473" y="68" width="33" height="14" />
+          <dc:Bounds x="553" y="68" width="33" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1sizis0_di" bpmnElement="MakeItSo">
-        <dc:Bounds x="600" y="77" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1nkle7y_di" bpmnElement="SkipIt" bioc:stroke="#e53935" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#e53935">
+        <dc:Bounds x="520" y="280" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1nkle7y_di" bpmnElement="SkipIt">
-        <dc:Bounds x="440" y="220" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1hkvy36_di" bpmnElement="UserGo" bioc:stroke="#e53935" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#e53935">
+        <dc:Bounds x="420" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0abz8tp_di" bpmnElement="say-hello" bioc:stroke="#43a047" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#43a047">
+        <dc:Bounds x="260" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
