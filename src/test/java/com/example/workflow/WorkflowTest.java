@@ -1,6 +1,7 @@
 package com.example.workflow;
 
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.spring.boot.starter.test.helper.AbstractProcessEngineRuleTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +27,7 @@ public class WorkflowTest extends AbstractProcessEngineRuleTest {
         // when
         topicConfig.createUsersTopic();
 
-//        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey);
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey);
 
         // then
 //        assertThat(processInstance).isEnded();//.isStarted();
