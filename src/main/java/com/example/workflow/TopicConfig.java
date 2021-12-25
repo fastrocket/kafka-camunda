@@ -10,7 +10,7 @@ public class TopicConfig {
     public static final String USER_TOPIC = "users";
 
     @Bean
-    public NewTopic businessProcessEngineError() {
+    public NewTopic createUsersTopic() {
         return createNewTopic(USER_TOPIC, 1);
     }
 

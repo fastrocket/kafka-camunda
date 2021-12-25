@@ -1,7 +1,6 @@
 package com.example.workflow;
 
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.spring.boot.starter.test.helper.AbstractProcessEngineRuleTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,13 +15,18 @@ public class WorkflowTest extends AbstractProcessEngineRuleTest {
     @Autowired
     public RuntimeService runtimeService;
 
+    @Autowired
+    TopicConfig topicConfig;
+
     @Test
     public void shouldExecuteHappyPath() {
         // given
         String processDefinitionKey = "linh_process";
 
         // when
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey);
+        topicConfig.createUsersTopic();
+
+//        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey);
 
         // then
 //        assertThat(processInstance).isEnded();//.isStarted();
