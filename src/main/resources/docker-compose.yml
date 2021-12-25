@@ -25,8 +25,10 @@ services:
       - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
       # The below did not work. It probably needs kafka defined in /etc/hosts or DNS
       #- KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://192.168.1.184:9092,EXTERNAL://localhost:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://23.23.200.63:9092,EXTERNAL://localhost:9093
+      #      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://192.168.1.184:9092,EXTERNAL://localhost:9093
       - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
       # Below was not needed
       #- KAFKA_ADVERTISED_HOST_NAME=kafka
     depends_on:
