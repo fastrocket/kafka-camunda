@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.camunda.bpm.spring.boot.starter.event.PostDeployEvent;
@@ -9,6 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.event.EventListener;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+@Slf4j
 @EnableConfigurationProperties
 @EnableProcessApplication
 @SpringBootApplication
@@ -21,10 +26,24 @@ public class Application {
     @Autowired
     private RuntimeService runtimeService;
 
+    @Autowired
+    private GenericSender genericSender;
+
     @EventListener
-    public void processPostDeploy(PostDeployEvent event) {
-        System.out.println("###### processPostDeploy!");
-        runtimeService.startProcessInstanceByKey("linh_process");
+    public void postDeployEvent(PostDeployEvent event) {
+        final String processName = "linh_process";
+        log.info("###### postDeployEvent starting Camunda process: ", processName);
+        runtimeService.startProcessInstanceByKey(processName);
+
+        log.info("###### postDeployEvent starting timer");
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                genericSender.send("Timer beep");
+            }
+        }, 1000, 1 * 60 * 1000); // delay of 1 second, repeat every minute
+
     }
 }
 
