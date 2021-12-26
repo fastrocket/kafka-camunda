@@ -35,6 +35,13 @@ public class GenericSender {
     }
 
     public void sendBig(Big payload) {
+        String hostname;
+        try {
+            hostname = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException ex) {
+            hostname = "Unknown";
+        }
+        payload.setMessage(hostname + " -> " + payload.getMessage());
         log.info("SENDBIG: payload={}", payload);
         bigTemplate.send("bigger", payload.getKey(), payload);
     }
