@@ -29,7 +29,7 @@ public class TopicConfig {
 
     @Bean
     public NewTopic createUsersTopic() {
-        return createNewTopic(USER_TOPIC, 1);
+        return createNewTopic(USER_TOPIC);
     }
 
     private NewTopic createNewTopic(String name, int partitions) {
