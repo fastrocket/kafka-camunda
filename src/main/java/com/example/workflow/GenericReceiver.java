@@ -14,7 +14,11 @@ public class GenericReceiver {
     @KafkaListener(topics = "${kafka.topic}")
     public void receive(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
-                        @Payload String message) {
-        log.info("received topic={} key={} payload='{}'", topic, key, message);
+                        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
+                        @Header(KafkaHeaders.OFFSET) String offset,
+                        @Payload String message
+    ) {
+        log.info("RECEIVE: received topic={} key={} partition={}, offset={}, payload='{}'",
+                topic, key, partition, offset, message);
     }
 }
