@@ -9,9 +9,16 @@
         <outputRelativeToContentRoot value="true" />
         <module name="kafka-camunda" />
       </profile>
+      <profile name="Annotation profile for Unknown" enabled="true">
+        <sourceOutputDir name="../../target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="wrapper" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="kafka-camunda" target="8" />
+      <module name="wrapper" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
