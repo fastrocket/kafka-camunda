@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.springframework.kafka.core.KafkaAdmin;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Configuration
 public class TopicConfig {
     public static final String USER_TOPIC = "users";
@@ -31,6 +33,7 @@ public class TopicConfig {
     }
 
     private NewTopic createNewTopic(String name, int partitions) {
+        log.info("createNewTopic: {} partitions={} replicas={}", name, partitions, 1);
         return TopicBuilder
                 .name(name)
                 .partitions(partitions)
@@ -39,6 +42,6 @@ public class TopicConfig {
     }
 
     private NewTopic createNewTopic(String name) {
-        return createNewTopic(name, 2);
+        return createNewTopic(name, 5);
     }
 }
