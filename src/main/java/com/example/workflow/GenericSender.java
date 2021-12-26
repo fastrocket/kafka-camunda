@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -49,7 +49,7 @@ public class GenericSender {
         if (key == null) {
             key = UUID.randomUUID().toString();
         }
-        String now = LocalDate.now().toString();
+        String now = LocalDateTime.now().toString();
         payload = hostname + ": " + now + " ->" + payload;
         LOGGER.info("SEND: sending payload='{}' to topic='{}' with key={}", payload, topic, key);
         kafkaTemplate.send(topic, key, payload);
