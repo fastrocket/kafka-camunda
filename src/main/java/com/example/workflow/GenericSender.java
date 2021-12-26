@@ -1,6 +1,6 @@
 package com.example.workflow;
 
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -11,18 +11,18 @@ import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.slf4j.LoggerFactory.getLogger;
-
+@Slf4j
 @Service
 public class GenericSender {
-
-    private static final Logger LOGGER = getLogger(GenericSender.class);
 
     @Value("${kafka.topic}")
     private String _topic;
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
+
+    @Autowired
+    private KafkaTemplate<String, Big> bigTemplate;
 
     public void send(String topic, String payload) {
 
@@ -32,6 +32,11 @@ public class GenericSender {
     public void send(String payload) {
 
         doSend(null, null, payload);
+    }
+
+    public void sendBig(Big payload) {
+        log.info("SENDBIG: payload={}", payload);
+        bigTemplate.send("bigger", payload.getKey(), payload);
     }
 
     private void doSend(String topic, String key, String payload) {
@@ -51,7 +56,7 @@ public class GenericSender {
         }
         String now = LocalDateTime.now().toString();
         payload = hostname + ": " + now + " ->" + payload;
-        LOGGER.info("SEND: sending payload='{}' to topic='{}' with key={}", payload, topic, key);
+        log.info("SEND: sending payload='{}' to topic='{}' with key={}", payload, topic, key);
         kafkaTemplate.send(topic, key, payload);
     }
 }

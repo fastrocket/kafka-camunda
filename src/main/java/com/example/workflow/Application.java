@@ -10,8 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.event.EventListener;
 
+import java.time.LocalDateTime;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @EnableConfigurationProperties
@@ -42,8 +45,21 @@ public class Application {
             public void run() {
                 genericSender.send("Timer beep");
             }
-        }, 1000, 1 * 60 * 1000); // delay of 1 second, repeat every minute
+        }, 1000, 5 * 60 * 1000); // delay of 1 second, repeat every minute
 
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                final String key = UUID.randomUUID().toString();
+                Big big = Big.builder()
+                        .id(ThreadLocalRandom.current().nextInt())
+                        .message("BIG data data data ")
+                        .created(LocalDateTime.now())
+                        .key(key)
+                        .build();
+                genericSender.sendBig(big);
+            }
+        }, 500, Math.abs(ThreadLocalRandom.current().nextInt()) % 60000 + 5000);  // delay of 1 second, repeat every minute
     }
 }
 

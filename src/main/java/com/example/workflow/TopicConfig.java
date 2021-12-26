@@ -28,6 +28,11 @@ public class TopicConfig {
     }
 
     @Bean
+    public NewTopic createBigTopic() {
+        return createNewTopic("big");
+    }
+
+    @Bean
     public NewTopic createUsersTopic() {
         return createNewTopic(USER_TOPIC);
     }
