@@ -33,7 +33,6 @@ public class TopicConfig {
     }
 
     @Bean
-
     public NewTopic createModifyDnsTopic() {
         return createNewTopic("modify_dns", 10);
     }

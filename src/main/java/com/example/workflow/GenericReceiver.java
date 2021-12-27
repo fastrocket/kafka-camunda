@@ -38,10 +38,10 @@ public class GenericReceiver {
     public void modifyDns(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
                           @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                           @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
-                          @Header(KafkaHeaders.OFFSET) String offset,
+                          @Header(KafkaHeaders.OFFSET) String offset,   
                           @Payload DomainName message
     ) {
-        log.info("START PROCESS: received topic={} key={} partition={}, offset={}, payload='{}'",
+        log.info("MODIFYDNS LISTENER: received topic={} key={} partition={}, offset={}, payload='{}'",
                 topic, key, partition, offset, message);
     }
 }

@@ -11,12 +11,17 @@ import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.example.workflow.models.DomainName;
+
 @Slf4j
 @Service
 public class GenericSender {
 
     @Value("${kafka.topic}")
     private String _topic;
+
+    @Autowired
+    private KafkaTemplate<String, DomainName> domainTemplate;
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
@@ -65,5 +70,10 @@ public class GenericSender {
         payload = hostname + ": " + now + " ->" + payload;
         log.info("SEND: sending payload='{}' to topic='{}' with key={}", payload, topic, key);
         kafkaTemplate.send(topic, key, payload);
+    }
+
+    public void sendDns(DomainName domainName){
+        log.info("sendDns sent DomainName to modify_dns: " + domainName);
+        domainTemplate.send("modify_dns", UUID.randomUUID().toString(), domainName);
     }
 }
