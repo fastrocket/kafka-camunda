@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import com.example.workflow.models.DomainName;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -30,6 +31,17 @@ public class GenericReceiver {
                            @Payload Big message
     ) {
         log.info("BIG RECEIVE: received topic={} key={} partition={}, offset={}, payload='{}'",
+                topic, key, partition, offset, message);
+    }
+
+    @KafkaListener(topics = "modify_dns")
+    public void modifyDns(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+                          @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
+                          @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
+                          @Header(KafkaHeaders.OFFSET) String offset,
+                          @Payload DomainName message
+    ) {
+        log.info("START PROCESS: received topic={} key={} partition={}, offset={}, payload='{}'",
                 topic, key, partition, offset, message);
     }
 }

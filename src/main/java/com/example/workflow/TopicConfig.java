@@ -29,7 +29,13 @@ public class TopicConfig {
 
     @Bean
     public NewTopic createBigTopic() {
-        return createNewTopic("big");
+        return createNewTopic("big", 10);
+    }
+
+    @Bean
+
+    public NewTopic createModifyDnsTopic() {
+        return createNewTopic("modify_dns", 10);
     }
 
     @Bean
@@ -47,6 +53,6 @@ public class TopicConfig {
     }
 
     private NewTopic createNewTopic(String name) {
-        return createNewTopic(name, 5);
+        return createNewTopic(name, 10);
     }
 }

@@ -47,7 +47,8 @@ public class Application {
             }
         }, 1000, 5 * 60 * 1000); // delay of 1 second, repeat every minute
 
-        timer.scheduleAtFixedRate(new TimerTask() {
+        Timer timer2 = new Timer();
+        timer2.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 final String key = UUID.randomUUID().toString();
