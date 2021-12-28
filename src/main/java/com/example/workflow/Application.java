@@ -1,5 +1,7 @@
 package com.example.workflow;
 
+import com.example.workflow.models.DnsCsv;
+import com.example.workflow.models.DomainName;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
@@ -32,10 +34,13 @@ public class Application {
     @Autowired
     private GenericSender genericSender;
 
+    @Autowired
+    private Globals globals;
+
     @EventListener
     public void postDeployEvent(PostDeployEvent event) {
         final String processName = "linh_process";
-        log.info("###### postDeployEvent starting Camunda process: ", processName);
+        log.info("###### postDeployEvent starting Camunda process: {}", processName);
         runtimeService.startProcessInstanceByKey(processName);
 
         log.info("###### postDeployEvent starting timer");
@@ -61,6 +66,20 @@ public class Application {
                 genericSender.sendBig(big);
             }
         }, 500, Math.abs(ThreadLocalRandom.current().nextInt()) % 60000 + 5000);  // delay of 1 second, repeat every minute
+
+        Timer timer3 = new Timer();
+        timer3.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+//                final String key = UUID.randomUUID().toString();
+                DnsCsv dns = globals.getRandomDomain();
+                DomainName domainName = DomainName.builder()
+                        .id(ThreadLocalRandom.current().nextInt())
+                        .name(dns.getName())
+                        .build();
+                genericSender.sendDns(domainName);
+            }
+        }, 500, Math.abs(ThreadLocalRandom.current().nextInt()) % 30000 + 10000);
     }
 }
 

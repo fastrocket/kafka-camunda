@@ -35,13 +35,13 @@ public class GenericReceiver {
     }
 
     @KafkaListener(topics = "modify_dns")
-    public void modifyDns(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
-                          @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
-                          @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
-                          @Header(KafkaHeaders.OFFSET) String offset,   
-                          @Payload DomainName message
+    public void receiveModifyDns(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+                                 @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
+                                 @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
+                                 @Header(KafkaHeaders.OFFSET) String offset,
+                                 @Payload DomainName message
     ) {
-        log.info("MODIFYDNS LISTENER: received topic={} key={} partition={}, offset={}, payload='{}'",
+        log.info("REC_MODIFY_DNS LISTENER: received topic={} key={} partition={}, offset={}, payload='{}'",
                 topic, key, partition, offset, message);
     }
 }

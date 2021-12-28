@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "Domain Name",
+      "type": "textfield",
+      "id": "Field_0c9vljh",
+      "key": "domain_name",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "values": [
+        {
+          "label": "E3",
+          "value": "e3"
+        },
+        {
+          "label": "Azure",
+          "value": "azure"
+        }
+      ],
+      "label": "Select",
+      "type": "select",
+      "id": "Field_1x30g4w",
+      "key": "field_dns_host",
+      "description": "Host"
+    }
+  ],
+  "type": "default",
+  "id": "Form_0c16uup"
+}

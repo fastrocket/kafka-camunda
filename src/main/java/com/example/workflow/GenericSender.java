@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import com.example.workflow.models.DomainName;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,8 +11,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import com.example.workflow.models.DomainName;
 
 @Slf4j
 @Service
@@ -72,8 +71,8 @@ public class GenericSender {
         kafkaTemplate.send(topic, key, payload);
     }
 
-    public void sendDns(DomainName domainName){
-        log.info("sendDns sent DomainName to modify_dns: " + domainName);
+    public void sendDns(DomainName domainName) {
+        log.info("SEND_DNS sent DomainName to modify_dns: " + domainName);
         domainTemplate.send("modify_dns", UUID.randomUUID().toString(), domainName);
     }
 }

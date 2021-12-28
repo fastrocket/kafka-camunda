@@ -9,7 +9,7 @@
       <bpmn:incoming>Flow_1ucq49i</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_16gzt2m" sourceRef="say-hello" targetRef="UserGo" />
-    <bpmn:serviceTask id="say-hello" name="Say hello demo" camunda:class="com.example.workflow.SayHelloDelegate">
+    <bpmn:serviceTask id="say-hello" name="Say hello demo" camunda:class="com.example.workflow.Delegates.SayHelloDelegate">
       <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16gzt2m</bpmn:outgoing>
     </bpmn:serviceTask>
