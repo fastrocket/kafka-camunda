@@ -102,12 +102,18 @@
 
     </dependencies>
 
+    <packaging>jar</packaging>
+
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.4.3</version>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
             </plugin>
 
             <plugin>
