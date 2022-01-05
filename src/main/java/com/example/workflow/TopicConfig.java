@@ -28,6 +28,15 @@ public class TopicConfig {
     }
 
     @Bean
+    public NewTopic createPublicTopic() {
+        return createNewTopic("public", 10);
+    }
+
+    public NewTopic createPrivateTopic() {
+        return createNewTopic("private", 10);
+    }
+
+    @Bean
     public NewTopic createBigTopic() {
         return createNewTopic("big", 10);
     }

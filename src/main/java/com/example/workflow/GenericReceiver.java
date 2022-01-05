@@ -34,6 +34,17 @@ public class GenericReceiver {
                 topic, key, partition, offset, message);
     }
 
+    @KafkaListener(topics = "public")
+    public void receivePublic(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+                              @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
+                              @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
+                              @Header(KafkaHeaders.OFFSET) String offset,
+                              @Payload String message
+    ) {
+        log.info("PUBLIC RECEIVE: received topic={} key={} partition={}, offset={}, payload='{}'",
+                topic, key, partition, offset, message);
+    }
+
     @KafkaListener(topics = "modify_dns")
     public void receiveModifyDns(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
                                  @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,

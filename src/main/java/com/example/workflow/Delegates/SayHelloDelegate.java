@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-@Component
+@Component(value = "SayHelloDelegate")
 public class SayHelloDelegate implements JavaDelegate {
     private GenericSender sender;
 

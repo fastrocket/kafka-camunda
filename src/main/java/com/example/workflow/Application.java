@@ -39,11 +39,17 @@ public class Application {
 
     @EventListener
     public void postDeployEvent(PostDeployEvent event) {
-        final String processName = "linh_process";
-        log.info("###### postDeployEvent starting Camunda process: {}", processName);
-        runtimeService.startProcessInstanceByKey(processName);
+//        final String processName = "linh_process";
+//        log.info("###### postDeployEvent starting Camunda process: {}", processName);
+//        runtimeService.startProcessInstanceByKey(processName);
+//
+//        log.info("###### postDeployEvent starting timer");
 
-        log.info("###### postDeployEvent starting timer");
+        if (true) {
+            log.info("postDeployEvent doing nothing...");
+            return;
+        }
+
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override

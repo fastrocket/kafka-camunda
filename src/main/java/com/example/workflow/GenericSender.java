@@ -28,6 +28,9 @@ public class GenericSender {
     @Autowired
     private KafkaTemplate<String, Big> bigTemplate;
 
+    @Autowired
+    private KafkaTemplate<String, String> publicTemplate;
+
     public void send(String topic, String payload) {
 
         doSend(topic, null, payload);
@@ -36,6 +39,12 @@ public class GenericSender {
     public void send(String payload) {
 
         doSend(null, null, payload);
+    }
+
+    public void sendPublic(String key, String val) {
+
+        log.info("SENDPUBLIC: key={} value={}", key, val);
+        publicTemplate.send("public", key, val);
     }
 
     public void sendBig(Big payload) {
