@@ -34,16 +34,41 @@ public class GenericReceiver {
                 topic, key, partition, offset, message);
     }
 
-    @KafkaListener(topics = "public")
-    public void receivePublic(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
-                              @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
-                              @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
-                              @Header(KafkaHeaders.OFFSET) String offset,
-                              @Payload String message
-    ) {
-        log.info("PUBLIC RECEIVE: received topic={} key={} partition={}, offset={}, payload='{}'",
-                topic, key, partition, offset, message);
-    }
+//    @Bean
+//    public ConcurrentKafkaListenerContainerFactory kafkaListenerContainerFactory(
+//            ConcurrentKafkaListenerContainerFactoryConfigurer configurer,
+//            ConsumerFactory<Object, Object> kafkaConsumerFactory,
+//            KafkaTemplate<Object, Object> template) {
+//        ConcurrentKafkaListenerContainerFactory<Object, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+//        configurer.configure(factory, kafkaConsumerFactory);
+//        factory.setErrorHandler(new SeekToCurrentErrorHandler(
+//                new DeadLetterPublishingRecoverer(template), () -> 3));
+//        return factory;
+//    }
+
+//    @DltHandler
+//    void handler(Message<?> msg,
+//                 @Header(KafkaHeaders.ORIGINAL_OFFSET) byte[] offset,
+//                 @Header(KafkaHeaders.EXCEPTION_FQCN) String descException,
+//                 @Header(KafkaHeaders.EXCEPTION_STACKTRACE) String stacktrace,
+//                 @Header(KafkaHeaders.EXCEPTION_MESSAGE) String errorMessage) {
+//        System.out.println(msg);
+//        System.out.println(ByteBuffer.wrap(offset).getLong());
+//        System.out.println(descException);
+//        System.out.println(stacktrace);
+//        System.out.println(errorMessage);
+//    }
+
+//    @KafkaListener(topics = "public")
+//    public void receivePublic(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+//                              @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
+//                              @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
+//                              @Header(KafkaHeaders.OFFSET) String offset,
+//                              @Payload String message
+//    ) {
+//        log.info("PUBLIC RECEIVE: received topic={} key={} partition={}, offset={}, payload='{}'",
+//                topic, key, partition, offset, message);
+//    }
 
     @KafkaListener(topics = "modify_dns")
     public void receiveModifyDns(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
