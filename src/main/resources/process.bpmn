@@ -45,7 +45,7 @@
     <bpmn:boundaryEvent id="Event_Timer_Go" name="Timer Go" cancelActivity="false" attachedToRef="UserGo">
       <bpmn:outgoing>Flow_0t1e10e</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1hw41qc">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">T5M</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0t1e10e" sourceRef="Event_Timer_Go" targetRef="Activity_TimerExpired" />
